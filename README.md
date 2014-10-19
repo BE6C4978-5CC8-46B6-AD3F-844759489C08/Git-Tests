@@ -7,7 +7,7 @@
 A poorly made 'copy and paste' sort of script.
 Currently supports the copying (and pasting!) of these parts of blocks:
 
-`BrickColor, Anchored, CanCollide, Shape, FormFactor, Size, CFrame, **Every**Surface`
+`BrickColor, Anchored, CanCollide, Shape, FormFactor, Size, CFrame, `**Every**`Surface`
 
 > Current Build: *0.0.2*
 
