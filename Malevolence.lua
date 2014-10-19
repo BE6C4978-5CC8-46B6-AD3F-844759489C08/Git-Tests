@@ -4,35 +4,35 @@ local core = {}
 --------------------------------------------------------------------
 
 function core:ToString(fromArray)
-	local toArray
-	local bracket
+  local toArray
+  local bracket
 
-	if #fromArray > 0 and type(fromArray) == 'table' then
-		for index = 1,#fromArray do
-			fromArray[index] = string.gsub(fromArray[index], ' ', '_')
+  if #fromArray > 0 and type(fromArray) == 'table' then
+    for index = 1,#fromArray do
+      fromArray[index] = string.gsub(fromArray[index], ' ', '_')
 
-			if toArray then
-				toArray = toArray .. ' ' .. fromArray[index]
-			else
-				toArray = fromArray[index]
-			end
-		end
-	elseif type(fromArray) == 'table' then
-		for index, value in pairs(fromArray) do
-			index = string.gsub(index, ' ', '_')
-			value = string.gsub(value, ' ', '_')
+      if toArray then
+        toArray = toArray .. ' ' .. fromArray[index]
+      else
+        toArray = fromArray[index]
+      end
+    end
+  elseif type(fromArray) == 'table' then
+    for index, value in pairs(fromArray) do
+      index = string.gsub(index, ' ', '_')
+      value = string.gsub(value, ' ', '_')
 
-			if toArray then
-				toArray = toArray .. '[' .. index .. ' ' .. value .. '] '
-			else
-				toArray = '[' .. index .. ' ' .. value .. '] '
-			end
-		end
-		
-		bracket = true
-	end
-	
-	return toArray, bracket
+      if toArray then
+        toArray = toArray .. '[' .. index .. ' ' .. value .. '] '
+      else
+        toArray = '[' .. index .. ' ' .. value .. '] '
+      end
+    end
+    
+    bracket = true
+  end
+  
+  return toArray, bracket
 end
 
 --------------------------------------------------------------------
@@ -41,28 +41,28 @@ end
 
 function core:ToArray(fromString, bracket)
 
-	local newArray = {}
+  local newArray = {}
 
-	if not bracket then
-		for match in string.gmatch(fromString, '%S+') do 
-			table.insert(newArray, match)
-		end
-	else
-		local number = 1
-		local prev
+  if not bracket then
+    for match in string.gmatch(fromString, '%S+') do 
+      table.insert(newArray, match)
+    end
+  else
+    local number = 1
+    local prev
 
-		for match in string.gmatch(fromString, '%S+') do 
-			local sub = string.gsub(match, '[%[%]]', '')
+    for match in string.gmatch(fromString, '%S+') do 
+      local sub = string.gsub(match, '[%[%]]', '')
 
-			if number % 2 > 0 then
-				number = number + 1
-				prev = sub
-			else
-				number = number + 1
-				newArray[prev] = sub
-			end     
-		end
-	end
+      if number % 2 > 0 then
+        number = number + 1
+        prev = sub
+      else
+        number = number + 1
+        newArray[prev] = sub
+      end     
+    end
+  end
 end
 
 --------------------------------------------------------------------
