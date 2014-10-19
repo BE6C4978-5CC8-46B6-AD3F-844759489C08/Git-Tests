@@ -1,7 +1,6 @@
 local core = {}
 --------------------------------------------------------------------
 -- The Core of the script, holds the functions used for later use. -
---------------------------------------------------------------------
 
 function core:Load(saved)
 	local malevolence = Instance.new('Model', workspace)
