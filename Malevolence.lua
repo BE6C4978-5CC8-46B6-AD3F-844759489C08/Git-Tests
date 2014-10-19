@@ -1,72 +1,80 @@
 local core = {}
 --------------------------------------------------------------------
 -- The Core of the script, holds the functions used for later use. -
+--------------------------------------------------------------------
 
-function core:Load(saved)
-	local malevolence = Instance.new('Model', workspace)
-	malevolence.Name = 'loadedModel ' .. tostring(math.random())
+function core:ToString(fromArray)
+	local toArray
+	local bracket
 
-	for int, array in pairs(saved) do
-		local part = Instance.new('Part', malevolence)
-		for index, value in next, {'BrickColor', 'Anchored', 'CanCollide', 'Shape', 'FormFactor', 'Size', 'CFrame', 'BackSurface', 'BottomSurface', 'FrontSurface', 'LeftSurface', 'RightSurface', 'TopSurface'} do
-			part[value] = array[value]
+	if #fromArray > 0 and type(fromArray) == 'table' then
+		for index = 1,#fromArray do
+			fromArray[index] = string.gsub(fromArray[index], ' ', '_')
+
+			if toArray then
+				toArray = toArray .. ' ' .. fromArray[index]
+			else
+				toArray = fromArray[index]
+			end
 		end
-	end
-end
+	elseif type(fromArray) == 'table' then
+		for index, value in pairs(fromArray) do
+			index = string.gsub(index, ' ', '_')
+			value = string.gsub(value, ' ', '_')
 
-------------------------------
--- Loads the selected build. -
-------------------------------
-
-function core:Save(searched)
-	local savedParts = {}
-
-	for int, part in pairs(searched) do
-		savedParts[int] = {}
-		for index, value in next, {'BrickColor', 'Anchored', 'CanCollide', 'Shape', 'FormFactor', 'Size', 'CFrame', 'BackSurface', 'BottomSurface', 'FrontSurface', 'LeftSurface', 'RightSurface', 'TopSurface'} do
-			savedParts[int][value] = part[value]
+			if toArray then
+				toArray = toArray .. '[' .. index .. ' ' .. value .. '] '
+			else
+				toArray = '[' .. index .. ' ' .. value .. '] '
+			end
 		end
-	end
-	core:Load(savedParts)
-end
-
-------------------------------
--- Saves the selected build. -
-------------------------------
-
-function core:Search(object)
-	local selection = object and object:GetChildren() or game.Selection:Get()
-	local selected = {}
-
-	for index, object in pairs(selection) do
 		
-		if object:IsA('Part') then
-			table.insert(selected, object)
-		elseif object:IsA('Model') then
-			core:Search(object)
-		end	
+		bracket = true
 	end
+	
+	return toArray, bracket
+end
 
-	if #selected > 0 then
-		core:Save(selected)
+--------------------------------------------------------------------
+-- Takes a table and turns it into a string. Could be done better. -
+--------------------------------------------------------------------
+
+function core:ToArray(fromString, bracket)
+
+	local newArray = {}
+
+	if not bracket then
+		for match in string.gmatch(fromString, '%S+') do 
+			table.insert(newArray, match)
+		end
+	else
+		local number = 1
+		local prev
+
+		for match in string.gmatch(fromString, '%S+') do 
+			local sub = string.gsub(match, '[%[%]]', '')
+
+			if number % 2 > 0 then
+				number = number + 1
+				prev = sub
+			else
+				number = number + 1
+				newArray[prev] = sub
+			end     
+		end
 	end
 end
 
 --------------------------------------------------------------------
--- Searches the selected build, selects the things we want to save -
--- And sends them off to be saved by the core:Save() function. -----
+-- Takes a string and turns it into a table. Could be done better. -
 --------------------------------------------------------------------
 
-core:Search()
-
 --------------------------------------------------------------------
------------- Core ---- SaxaphoneWalrus ---- Malevolence ------------
+------------- Core ---- SaxaphoneWalrus ---- Enigmatic -------------
 --------------------------------------------------------------------
 --------------------------------------------------------------------
-------------------- VERSION ---- 0.0.2 ---- NOTE -------------------
+------------------- VERSION ---- 0.0.1 ---- NOTE -------------------
 --------------------------------------------------------------------
--- Currently only runnable through the Command Bar or some other ---
--- service that allows for a high enough security level (plugins) --
--- I will release another version for regular script capabilities. -
--- Which will most likely run off of multiple Region3 searches... --
+-- Early draft, could most likely be done better. Only use if you --
+-- have no other option. This is not a very good script at all... --
 --------------------------------------------------------------------
