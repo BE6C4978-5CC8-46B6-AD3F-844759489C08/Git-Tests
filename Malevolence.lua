@@ -67,7 +67,7 @@ core:Search()
 ------------------- VERSION ---- 0.0.2 ---- NOTE -------------------
 --------------------------------------------------------------------
 -- Currently only runnable through the Command Bar or some other ---
--- service that allows for a high enough security level (plugins?) -
+-- service that allows for a high enough security level (plugins) --
 -- I will release another version for regular script capabilities. -
 -- Which will most likely run off of multiple Region3 searches... --
 --------------------------------------------------------------------
